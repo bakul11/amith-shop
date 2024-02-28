@@ -1,9 +1,15 @@
 "use client"
 import useActiveUser from '@/hooks/useActiveUser';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const page = () => {
     const [user] = useActiveUser();
+    const navigate = useRouter();
+
+    if (!user?.email) {
+        navigate.push('/login')
+    }
 
     return (
         <div className='checkout-section my-12'>
