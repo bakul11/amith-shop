@@ -5,23 +5,17 @@ import { NextResponse } from "next/server"
 export const GET = async (req, res) => {
     try {
         await connectDB();
-        const searchParams = new searchParams(req.URL);
+        const url = new URL(req.url);
+        const searchParams = new URLSearchParams(url.searchParams);
         const search = searchParams.get('search')
-
-        const product = await productDB.find({ $regx: { title: search, Option: 'i' } });
-
-        if (!product) {
-            return NextResponse.json({
-                message: 'Product not found!'
-            })
-        }
+        const product = await productDB.find({ title: { $regex: search, $options: 'i' } });
 
         //success
         return NextResponse.json(product)
 
     } catch (error) {
         return NextResponse.json({
-            message: 'Product upload fail, please try again!',
+            message: 'Product not found!',
             error: error?.message
         })
     }

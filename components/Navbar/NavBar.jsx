@@ -93,7 +93,7 @@ const NavBar = () => {
                         {
                             user?.email &&
                                 user?.email ?
-                                <div className="profile relative">
+                                <div className="profile relative z-50">
                                     <div className="flex items-center gap-1">
                                         <Image src={user?.profile} alt='profile' height={500} width={500} className='object-cover rounded-full h-[40px] w-[40px]' />
                                         <FaAngleDown onClick={handleOpen} className={`cursor-pointer ${open ? 'rotate-180' : ''}`} />

@@ -12,6 +12,10 @@ const productSchema = new mongoose.Schema({
     oldPrice: {
         type: Number,
         required: true
+    },
+    photo: {
+        type: String,
+        required: true
     }
 })
 const productDB = mongoose.models.PRODUCT || mongoose.model('PRODUCT', productSchema);

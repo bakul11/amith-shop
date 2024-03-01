@@ -85,24 +85,27 @@ const MobileBar = () => {
     // Handle search Product Items
     const [product, setProduct] = useState([]);
     const [loadding, setLoadding] = useState(false);
+
     const [search, setSearch] = useState('');
 
-    const handleSearchItem = async () => {
+    const handleSearchItem = async (event) => {
+        event.preventDefault();
+
         setLoadding(true)
         await fetch(`/api/product/search-product?search=${search}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 setProduct(data);
                 setLoadding(false);
+                if (data?.length === 0) {
+                    toast.error('Product not found !')
+                }
                 setSearch('')
             }).catch(err => {
                 setLoadding(false);
-                toast.error(err)
                 setSearch('')
             })
     }
-
 
     //handle logout function 
     const handleLogout = () => {
@@ -246,9 +249,32 @@ const MobileBar = () => {
                             }
                         </form>
 
+                        {/* Show Search Product UI  */}
 
+                        <div className={`${product?.length === 0 ? '' : 'shadow-lg z-50 bg-white rounded-md absolute top-12 left-0 py-5 right-0 overflow-y-auto max-h-[200px]'}`}>
+                            <div className="divide px-3 divide-y divide-dashed divide-blue-400 space-y-4">
+                                {
 
-                        
+                                    product?.map((pd, index) => {
+                                        const { title, newPrice, photo, _id } = pd;
+                                        return (
+
+                                            <Link href={`/product/details/${_id}`} className="flex items-center gap-2 " key={index}>
+                                                <div className="pd-logo">
+                                                    <Image src={photo} alt='logo' height={500} width={500} className='object-cover rounded-sm h-[100px] w-[100px]' />
+                                                </div>
+                                                <div className="pd-title">
+                                                    <h3 className='text-slate-600 text-[17px]'>{title}</h3>
+                                                    <p className='text-gray-500'>Price : ${newPrice}.00</p>
+                                                </div>
+                                            </Link>
+
+                                        )
+                                    })
+                                }
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
