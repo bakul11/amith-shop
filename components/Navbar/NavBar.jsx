@@ -7,9 +7,9 @@ import React, { useState } from 'react';
 import { FaAngleDown } from 'react-icons/fa';
 import { LiaUserSolid } from "react-icons/lia";
 import { RxDashboard } from "react-icons/rx";
-import { IoIosLogOut } from "react-icons/io";
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
+import { MdLogout } from 'react-icons/md';
 
 
 
@@ -77,7 +77,7 @@ const NavBar = () => {
 
 
     return (
-        <div className='bg-white shadow-sm'>
+        <div className='bg-white shadow-sm hidden lg:block'>
             <div className="px-4 lg:px-12 py-5">
                 <div className="flex items-center justify-between gap-2">
                     {
@@ -123,7 +123,7 @@ const NavBar = () => {
                                                             handleOpen()
                                                     }}>
                                                         <div className="flex items-center gap-1 text-[15px] font-[100]">
-                                                            <IoIosLogOut />
+                                                            <MdLogout />
                                                             Logout
                                                         </div>
                                                     </button>

@@ -1,11 +1,51 @@
 "use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaAngleRight, FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 import logo from '../../public/assets/cb.webp'
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { BeatLoader } from 'react-spinners';
 
 const Footer = () => {
+    const [email, setEmail] = useState('')
+    const [loadding, setLoadding] = useState(false)
+    const router = useRouter();
+
+    //handle submit email 
+    const handleSumitEmail = async (event) => {
+        event.preventDefault();
+
+        setLoadding(true)
+        await fetch('/api/newsletter/post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data?.error?.includes('E11000 duplicate key error collection')) {
+                    toast.error('already use this email')
+                    setLoadding(false)
+                }
+                if (data?.success) {
+                    toast.success(data?.message);
+                    setEmail('')
+                    router.push('/');
+                    setLoadding(false)
+                } else {
+                    if (data?.error) {
+                        toast.error(data?.message2)
+                        setLoadding(false)
+                    }
+                }
+            })
+    }
+
     return (
         <div className='bg-slate-800'>
             <div className='px-5 lg:px-12 pt-8 pb-5'>
@@ -114,9 +154,24 @@ const Footer = () => {
                         <h3 className='capitalize text-white font-semibold text-[16px] mb-3'>Newsletter</h3>
                         <p className='text-gray-400 text-[15px] my-2'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero sed aperiam quam</p>
                         <div className="subcribe relative capitalize my-5">
-                            <form action="">
-                                <input type="email" placeholder='Email Address' className='outline-none p-2 focus:ring-white focus:ring-1 rounded-sm ring-0 w-full ring-gray-400 placeholder-gray-400 text-[14px]' required />
-                                <input type="submit" value="Subscribe" className='bg-gradient-to-r from-cyan-500 to-blue-400 text-white p-2 cursor-pointer rounded-sm absolute right-0 top-0 bottom-0' />
+                            <form onSubmit={handleSumitEmail}>
+                                <input type="email" placeholder='Email Address' value={email} className='outline-none p-2 focus:ring-white focus:ring-1 rounded-sm ring-0 w-full ring-gray-400 placeholder-gray-400 text-[14px]'
+                                    onChange={(e) => setEmail(e.target.value)} required />
+                                {
+                                    loadding ?
+                                        <p className='bg-gradient-to-r from-pink-400 to-rose-500 rounded-r-md text-white px-5 py-2 cursor-pointer absolute right-0 top-0 bottom-0' disabled>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <span>Please wait..</span>
+                                                <BeatLoader
+                                                    color="#FFFFFF"
+                                                    speedMultiplier={2}
+                                                />
+                                            </div>
+                                        </p>
+                                        :
+                                        <input type="submit" value="Subscribe" className='bg-gradient-to-r from-cyan-500 to-blue-400 text-white p-2 cursor-pointer rounded-sm absolute right-0 top-0 bottom-0' />
+                                }
+
                             </form>
                         </div>
                         <div className="flow-us mt-5">

@@ -1,7 +1,9 @@
 "use client"
+import useActiveUser from '@/hooks/useActiveUser';
 import { decrementQty, incrementQty, removeFormCart } from '@/redux/slice/cartSlice';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FaArrowRightLong, FaRegTrashCan } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 const page = () => {
     const { cart } = useSelector(state => state.cart);
     const dispatch = useDispatch();
+    const [user] = useActiveUser();
+    const router = useRouter();
 
 
     //total calculation
@@ -59,12 +63,17 @@ const page = () => {
                     </div>
                     <div className="cart-checkout bg-white shadow-sm rounded-md lg:w-[20%] p-2 space-y-5 divide-y divide-dashed divide-blue-400">
                         <h2 className='font-semibold text-slate-800 mb-3'>Order Details</h2>
-                        <h4>Items : <span className='float-right'>{cart?.length} items</span></h4>
+                        <h4>Items : <span className='float-right'>{getTotal()?.totalQuantity} items</span></h4>
                         <h4>Sub total : <span className='float-right'>${getTotal()?.totalPrice}.00</span></h4>
                         <h4 className='font-bold text-slate-800'>Grand total Amount: <span className='float-right'>${getTotal()?.totalPrice}.00</span></h4>
                         <Link href='/checkout' className='rounded-[50px] px-5 py-2 bg-gradient-to-r from-rose-400 to-orange-400  inline-block text-center mx-auto text-white my-5'>
                             <div className="flex items-center justify-center gap-2">
-                                <span>Continue to Payment</span>
+                                {
+                                    user?.email ?
+                                        <span>Continue to Payment</span>
+                                        :
+                                        <span onClick={() => router.push('/login')}>Login first Continue</span>
+                                }
                                 <FaArrowRightLong />
                             </div>
                         </Link>

@@ -1,10 +1,9 @@
 "use client"
 import React, { useState } from 'react';
 import { FaAngleDoubleLeft } from 'react-icons/fa'
-import { MdDashboard } from 'react-icons/md'
+import { MdDashboard, MdLogout } from 'react-icons/md'
 import Link from 'next/link';
 import SlideMenu from './SlideMenu';
-import { IoIosLogOut } from 'react-icons/io';
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
@@ -42,8 +41,8 @@ const SlideBar = () => {
 
             <button className='ml-2 px-2 '>
                 <div className="flex items-center gap-2 text-gray-300" onClick={handleLogout}>
-                    <IoIosLogOut />
-                    <span>Logout</span>
+                    <MdLogout className='font-bold'/>
+                    <span className={`${openSlidebar ? 'hidden' : 'block'}`}>Logout</span>
                 </div>
             </button>
 

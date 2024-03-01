@@ -53,8 +53,8 @@ const Promotions = () => {
                         <input type="email" placeholder='Email Address' onChange={(e) => setEmail(e.target.value)} value={email} className='outline-none p-3 focus:ring-white focus:ring-1 rounded-md ring-0 w-full ring-gray-400 placeholder-gray-400 text-[14px]' required />
                         {
                             loadding ?
-                                <p className='bg-gradient-to-r from-blue-400 to-blue-500 rounded-r-md text-white px-5 py-2 cursor-pointer absolute right-0 top-0 bottom-0' disabled>
-                                    <div className="flex items-center gap-2">
+                                <p className='bg-gradient-to-r from-pink-400 to-rose-500 rounded-r-md text-white px-5 py-2 cursor-pointer absolute right-0 top-0 bottom-0' disabled>
+                                    <div className="flex items-center gap-2 mt-1">
                                         <span>Please wait..</span>
                                         <BeatLoader
                                             color="#FFFFFF"
@@ -68,12 +68,7 @@ const Promotions = () => {
                     </form>
                 </div>
 
-                <div className="flex items-center gap-2 justify-center">
-                    <p className='text-gray-200'> By subscribe you agree to the Design Bundles </p>
-                    <Link href='/conditions' className='text-gray-100 text-[14px]'>Terms & Conditions</Link>
-                    <p className='text-gray-200'>&</p>
-                    <Link href='/conditions' className='text-gray-100 text-[14px]'>Privacy Policy</Link>
-                </div>
+                <p className='text-white'> By subscribe you agree to the Design Bundles Terms & Conditions Privacy Policy</p>
             </div>
         </div>
     );

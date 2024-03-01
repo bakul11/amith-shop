@@ -113,7 +113,7 @@ const page = () => {
                                     loadding ?
 
                                         <button className='flex items-center justify-center gap-1 w-full capitalize text-white my-3 font-semibold py-2 rounded-md bg-rose-500' disabled>
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex items-center gap-2 mt-1">
                                                 <span>Processing</span>
                                                 <BeatLoader
                                                     color="#FFFFFF"

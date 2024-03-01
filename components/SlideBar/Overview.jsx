@@ -1,11 +1,11 @@
 'use client'
 import React from 'react';
 import { LuUsers2 } from "react-icons/lu";
-import { SiFampay } from "react-icons/si";
 import { RiWechatPayFill } from "react-icons/ri";
 import { TbZoomReset } from "react-icons/tb";
 import useActiveUser from '@/hooks/useActiveUser';
 import { FaEnvelopeCircleCheck } from "react-icons/fa6";
+import LoaddingAnimation from '../Animation/LoaddingAnimation';
 
 
 
@@ -68,7 +68,7 @@ const Overview = () => {
                         </div>
                     </div>
                     :
-                    <p className='text-center my-12 text-xl'>loadding please wait....</p>
+                    <LoaddingAnimation/>
             }
         </section>
     );

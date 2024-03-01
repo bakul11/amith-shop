@@ -7,6 +7,7 @@ import Footer from "@/components/Footer/Footer";
 import ReduxProvider from "@/redux/ReduxProvider/ReduxProvider";
 import HotToast from "@/components/Toast/HotToast";
 import TopJointBar from "@/components/Navbar/TopJointBar";
+import MoblieBar from "@/components/Navbar/MoblieBar";
 
 
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
       <body>
         <ReduxProvider>
           <TopJointBar />
+          <MoblieBar />
           <TopBar />
           <NavBar />
           {children}
