@@ -7,6 +7,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { useDispatch } from 'react-redux';
 import TendingLoadding from '../Animation/TendingLoadding';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -19,7 +20,7 @@ import TendingLoadding from '../Animation/TendingLoadding';
 const Trending = () => {
     const [tending, setTending] = useState([]);
     const [loadding, setLoadding] = useState(false);
-
+    const router = useRouter();
     const dispatch = useDispatch();
 
 
@@ -61,10 +62,10 @@ const Trending = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-5">
                             {
                                 tending && tending?.map((item, index) => {
-                                    const { title, newPrice, oldPrice, photo } = item;
+                                    const { title, newPrice, oldPrice, photo, _id } = item;
 
                                     return (
-                                        <div className="bg-white shadow-sm group rounded-md hover:translate-y-2  relative duration-[0.5s] transition-all ease-in-out" key={index}>
+                                        <div className="bg-white shadow-sm group rounded-md hover:translate-y-2  relative duration-[0.5s] transition-all ease-in-out" key={index} onClick={() => router.push(`/product/details/${_id}`)}>
                                             <Image src={photo} alt='design logo' className='object-cover rounded-t-md w-full' height={500} width={500} />
                                             <div className="tending-content p-3">
                                                 <div className="tending-title">

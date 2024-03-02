@@ -14,7 +14,7 @@ import { LuUsers2 } from 'react-icons/lu';
 const productList = [
     {
         title: 'add-product',
-        path: 'create-product',
+        path: 'add-product',
         icon: <BsPlusSquare />
     },
     {
@@ -45,7 +45,7 @@ const SlideMenu = ({ openSlidebar }) => {
                         const newPath = `/home/${path}`;
                         return (
                             <div className="product">
-                                <Link href={`/home/${path} `} key={index} className={`block my-2 px-2 capitalize rounded-md py-2  text-[15px] ${pathname === newPath ? "bg-blue-400 text-white" : 'text-gray-300'} `}>
+                                <Link href={`/dashboard/${path} `} key={index} className={`block my-2 px-2 capitalize rounded-md py-2  text-[15px] ${pathname === newPath ? "bg-blue-400 text-white" : 'text-gray-300'} `}>
                                     <div className="flex items-center gap-2">
                                         <span className='text-xl'>  {icon}</span>
                                         <span className={`${openSlidebar ? 'hidden' : 'block'}`}> {title}</span>
