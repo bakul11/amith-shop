@@ -2,7 +2,7 @@ import { connectDB } from "@/database/db";
 import newsLetterDB from "@/model/newsletterModel";
 import { NextResponse } from "next/server"
 
-export const DELETE = async (req, res, { params }) => {
+export const DELETE = async (req, { params }) => {
     try {
         await connectDB();
         const id = params.id;

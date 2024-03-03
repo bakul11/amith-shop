@@ -10,28 +10,36 @@ import { IoIosSearch } from 'react-icons/io';
 
 
 const page = () => {
-    const [newsletter, setNewsletter] = useState([]);
-    const [loadding, setLoadding] = useState(false);
+
     const [search, setSearch] = useState('');
+    const [loadding, setLoadding] = useState(false);
+    const [users, setUsers] = useState([]);
 
 
-    // load all newsletter api
+
+
     useEffect(() => {
-        fetch('/api/newsletter/getall-newsletter')
-            .then(res => res.json())
-            .then(data => {
-                setNewsletter(data)
-                setLoadding(false)
-            })
-            .catch(err => {
-                toast.error(err)
-                setLoadding(false)
-            })
-    }, [newsletter])
+        const fetchingUsersData = async () => {
+            await fetch('/api/auth/totalUsers')
+                .then(res => res.json())
+                .then(data => {
+                    setUsers(data)
+                    setLoadding(false)
+                })
+                .catch(err => {
+                    toast.error(err)
+                    setLoadding(false)
+                })
+        }
+
+        //call function
+        fetchingUsersData()
+
+    }, [users]);
 
 
     //handle remove email
-    const handleRemoveEmail = (id) => {
+    const handleRemoveUsers = (id) => {
         const confirmRemove = window.confirm('Do you want to remove this item?');
         if (confirmRemove) {
             fetch(`/api/newsletter/remove/${id}`, {
@@ -60,9 +68,9 @@ const page = () => {
                     :
                     <div className="product">
                         {
-                            newsletter?.length === 0 ?
+                            users?.length === 0 ?
                                 <div className="product-empty grid place-items-center my-12">
-                                    <h2 className='text-slate-800 text-[19px] font-semibold'>Your Newsletter is Empty</h2>
+                                    <h2 className='text-slate-800 text-[19px] font-semibold'>Users list is Empty</h2>
                                 </div>
                                 :
                                 <div className='show-product '>
@@ -81,24 +89,33 @@ const page = () => {
                                     <div className="overflow-auto lg:overflow-hidden">
                                         <table className='w-full'>
                                             <thead>
-                                                <tr className='text-[14px]  text-white bg-gradient-to-l from-cyan-500 to-blue-400 rounded-t-md font-[100] text-center capitalize'>
+                                                <tr className='text-[14px]  bg-gradient-to-l from-cyan-500 to-blue-400 text-white rounded-t-md font-[100] text-center capitalize'>
                                                     <th className='border-blue-100 border p-2'>#</th>
+                                                    <th className='border-blue-100 border p-2'>Profile</th>
+                                                    <th className='border-blue-100 border p-2 '>UserName</th>
                                                     <th className='border-blue-100 border p-2'>Email</th>
-                                                    <th className='border-blue-100 border p-2'>Time</th>
+                                                    <th className='border-blue-100 border p-2'>Role</th>
                                                     <th className='border-blue-100 border p-2'>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {
-                                                    newsletter?.filter(pd => pd?.email?.toLowerCase().includes(search)).map((item, index) => {
-                                                        const { email, time, _id } = item;
+                                                    users?.filter((pd) => pd.userName?.toLowerCase().includes(search)).map((item, index) => {
+                                                        const { email, _id, profile, role, userName } = item;
                                                         return (
                                                             <tr className='text-[14px] text-[#637381] font-[500] text-center' key={index}>
                                                                 <td className='border-blue-100 shadow-sm py-4 px-3'>{index + 1}</td>
-                                                                <td className='border-blue-100 shadow-sm py-4 px-3'>{email}</td>
-                                                                <td className='border-blue-100 shadow-sm py-4 px-3'>{time}</td>
                                                                 <td className='border-blue-100 shadow-sm py-4 px-3'>
-                                                                    <FaRegTrashCan className='cursor-pointer text-red-400 inline-block text-center mx-auto' onClick={() => handleRemoveEmail(_id)} />
+                                                                    <div className="flex items-center justify-center gap-2 flex-wrap">
+                                                                        <Image src={profile} alt='logo' height={500} width={500} className='object-cover rounded-full h-[50px] w-[50px]' />
+                                                                        <h3 className='capitalize'>{userName}</h3>
+                                                                    </div>
+                                                                </td>
+                                                                <td className='border-blue-100 shadow-sm py-4 px-3 capitalize'>{userName}</td>
+                                                                <td className='border-blue-100 shadow-sm py-4 px-3'>{email}</td>
+                                                                <td className='border-blue-100 shadow-sm py-4 px-3 capitalize'>{role}</td>
+                                                                <td className='border-blue-100 shadow-sm py-4 px-3 text-center'>
+                                                                    <FaRegTrashCan className='cursor-pointer text-red-400 inline-block text-center mx-auto' onClick={() => handleRemoveUsers(_id)} />
                                                                 </td>
 
                                                             </tr>

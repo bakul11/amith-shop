@@ -42,10 +42,10 @@ const SlideMenu = ({ openSlidebar }) => {
                 {
                     productList?.map((item, index) => {
                         const { title, path, icon } = item;
-                        const newPath = `/home/${path}`;
+                        const newPath = `/dashboard/${path}`;
                         return (
                             <div className="product">
-                                <Link href={`/dashboard/${path} `} key={index} className={`block my-2 px-2 capitalize rounded-md py-2  text-[15px] ${pathname === newPath ? "bg-blue-400 text-white" : 'text-gray-300'} `}>
+                                <Link href={`/dashboard/${path} `} key={index} className={`block my-4 px-2 capitalize rounded-md py-2  text-[15px] ${pathname === newPath ? "bg-gradient-to-l from-cyan-500 to-blue-400 text-white" : 'text-gray-300'} `}>
                                     <div className="flex items-center gap-2">
                                         <span className='text-xl'>  {icon}</span>
                                         <span className={`${openSlidebar ? 'hidden' : 'block'}`}> {title}</span>

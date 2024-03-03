@@ -7,6 +7,7 @@ import useActiveUser from '@/hooks/useActiveUser';
 import { FaEnvelopeCircleCheck } from "react-icons/fa6";
 import RecentProduct from '../RecentProduct/RecentProduct';
 import TendingLoadding from '../Animation/TendingLoadding';
+import toast from 'react-hot-toast';
 
 
 

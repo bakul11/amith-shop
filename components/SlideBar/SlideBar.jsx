@@ -25,7 +25,7 @@ const SlideBar = () => {
     const handleOpenSlidebar = () => setOpenOpenSlidebar(!openSlidebar);
 
     return (
-        <div className={`min-h-screen  px-4 bg-slate-800   relative ${openSlidebar ? 'w-[80px]' : 'w-[210px]'}`}>
+        <div className={`min-h-screen  px-4 pt-8 bg-slate-800   relative ${openSlidebar ? 'w-[80px]' : 'w-[210px]'}`}>
             <Link href='/dashboard' className='text-gray-300 pt-5 capitalize flex items-center gap-x-2  ml-2 px-2'>
                 <MdDashboard />
                 <span className={`text-[15px] ${openSlidebar ? 'hidden' : 'block'}`}> dashboard</span>
@@ -41,7 +41,7 @@ const SlideBar = () => {
 
             <button className='ml-2 px-2 '>
                 <div className="flex items-center gap-2 text-gray-300" onClick={handleLogout}>
-                    <MdLogout className='font-bold'/>
+                    <MdLogout className='font-bold' />
                     <span className={`${openSlidebar ? 'hidden' : 'block'}`}>Logout</span>
                 </div>
             </button>
