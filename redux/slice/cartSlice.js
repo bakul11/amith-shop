@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 import toast from "react-hot-toast";
 
+
+const newCart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []
+
 const initialState = {
-    cart: []
+    cart: newCart
 }
 
 const cartSlice = createSlice({
@@ -29,12 +32,14 @@ const cartSlice = createSlice({
             const removeProduct = state.cart.filter((item) => item._id !== action.payload);
             state.cart = removeProduct;
             toast.success('Item remove form cart success')
+            localStorage.setItem('cart', JSON.stringify(state.cart))
         },
         //quantity increment funtion
         incrementQty: (state, action) => {
             const item = state.cart.find((item) => item._id === action.payload);
             item.quantity++;
             toast.success('Item quantity increment ')
+            localStorage.setItem('cart', JSON.stringify(state.cart))
         },
         //decremnt qty funtion
         decrementQty: (state, action) => {
@@ -45,6 +50,7 @@ const cartSlice = createSlice({
                 item.quantity--;
                 toast.success('Item quantity decrement')
             }
+            localStorage.setItem('cart', JSON.stringify(state.cart))
         }
 
     }

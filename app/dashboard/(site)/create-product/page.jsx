@@ -55,7 +55,7 @@ const ProductModalData = () => {
                         oldPrice,
                         photo: imageUrl
                     }
-                    console.log(storeData);
+                
                     setLoadding(true);
                     fetch(`/api/product/post`, {
                         method: 'POST',
@@ -66,12 +66,15 @@ const ProductModalData = () => {
                     })
                         .then(res => res.json())
                         .then(result => {
-                            console.log(result);
+                         
                             if (result.success) {
                                 toast.success(result?.message)
                                 router.push('/dashboard/add-product')
                                 setLoadding(false);
                                 setReview('')
+                                setTitle('')
+                                setNewPrice('')
+                                setOldPrice('')
 
                             } else {
                                 if (result?.error) {

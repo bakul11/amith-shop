@@ -55,7 +55,7 @@ const page = () => {
                     setLoadding(false);
                     reset()
                     setError('')
-                    router.push('/')
+                    router.push('/login')
                 } else {
                     if (result?.error) {
                         toast.error(result?.message);

@@ -1,16 +1,13 @@
 import mongoose from "mongoose"
 
+
 const orderSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    orders: {
+    userInfo: Object,
+    cart: {
         type: Array
     },
     time: {

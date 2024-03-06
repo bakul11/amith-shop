@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { MdLogout, MdShoppingCartCheckout } from "react-icons/md";
-import { FaAngleDown, FaBars, FaUserCircle, FaUserLock } from "react-icons/fa";
+import { FaAngleDown, FaBars, FaShoppingBag, FaUserCircle, FaUserLock } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import logo from '../../public/assets/cb.webp'
 import Image from 'next/image';
@@ -66,6 +66,7 @@ const MobileBar = () => {
     const pathName = usePathname();
     const router = useRouter();
     const [user] = useActiveUser();
+    const admin = user?.role;
 
     //Handle show hide profile 
     const [open, setOpen] = useState(false);
@@ -167,12 +168,22 @@ const MobileBar = () => {
                                                             </Link>
                                                         </li>
                                                         <li>
-                                                            <Link href='/dashboard' className='text-white' onClick={handleOpen}>
-                                                                <div className="flex items-center gap-1 text-[15px] font-[100]">
-                                                                    <RxDashboard />
-                                                                    Dashboard
-                                                                </div>
-                                                            </Link>
+                                                            {
+                                                                admin === 'admin' ?
+                                                                    <Link href='/dashboard' className='text-white' onClick={handleOpen}>
+                                                                        <div className="flex items-center gap-1 text-[15px] font-[100]">
+                                                                            <RxDashboard />
+                                                                            Dashboard
+                                                                        </div>
+                                                                    </Link>
+                                                                    :
+                                                                    <Link href='/my-order' className='text-white' onClick={handleOpen}>
+                                                                        <div className="flex items-center gap-1 text-[15px] font-[100]">
+                                                                            <FaShoppingBag />
+                                                                            Orders
+                                                                        </div>
+                                                                    </Link>
+                                                            }
                                                         </li>
                                                         <li>
                                                             <button className='text-white' onClick={() => {

@@ -9,12 +9,13 @@ import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
+import useActiveUser from '@/hooks/useActiveUser';
 
 
 
 const TopBar = () => {
     const { cart } = useSelector(state => state.cart);
-
+    const [user] = useActiveUser();
 
     // Handle search Product Items
     const [product, setProduct] = useState([]);
@@ -117,12 +118,17 @@ const TopBar = () => {
 
                             </div>
                             <div className="loginBtn">
-                                <Link href='/login' className='bg-gradient-to-r from-cyan-500 to-blue-400 text-white rounded-[50px] p-2 inline-block'>
-                                    <div className="flex items-center gap-2">
-                                        <FaUserCircle className='text-md' />
-                                        Login account
-                                    </div>
-                                </Link>
+                                {
+                                    user?.email ?
+                                        <h3 className='text-slate-700 text-[17px]'>Hello, <span className='text-blue-400 capitalize font-semibold'>{user?.userName}</span></h3>
+                                        :
+                                        <Link href='/login' className='bg-gradient-to-r from-cyan-500 to-blue-400 text-white rounded-[50px] p-2 inline-block'>
+                                            <div className="flex items-center gap-2">
+                                                <FaUserCircle className='text-md' />
+                                                Login account
+                                            </div>
+                                        </Link>
+                                }
                             </div>
                         </div>
                     </div>

@@ -25,13 +25,20 @@ const Trending = () => {
 
 
     // all data fetching here api 
+    const [currentPage, setCurrentPage] = useState(4);
+    const [pageSize, setPageSize] = useState([]);
+
+
+
+
     useEffect(() => {
         const fetchingData = async () => {
             setLoadding(true)
-            await fetch('/api/product/get-allproducts')
+            await fetch(`/api/product/get-allproducts?page=${currentPage}`)
                 .then(res => res.json())
                 .then(data => {
-                    setTending(data)
+                    setTending(data?.product)
+                    setPageSize(data?.totalPages)
                     setLoadding(false)
                 })
                 .catch(err => {
@@ -43,7 +50,15 @@ const Trending = () => {
         //call function
         fetchingData()
 
-    }, []);
+    }, [currentPage]);
+
+
+
+
+
+    const pageDataNum = Array.from(pageSize);
+    console.log(pageDataNum);
+
 
     return (
         <section className='tending-section'>
@@ -65,12 +80,12 @@ const Trending = () => {
                                     const { title, newPrice, oldPrice, photo, _id } = item;
 
                                     return (
-                                        <div className="bg-white shadow-sm group rounded-md hover:translate-y-2  relative duration-[0.5s] transition-all ease-in-out" key={index} onClick={() => router.push(`/product/details/${_id}`)}>
+                                        <div className="bg-white shadow-sm group rounded-md hover:translate-y-2  relative duration-[0.5s] transition-all ease-in-out" key={index}>
                                             <Image src={photo} alt='design logo' className='object-cover rounded-t-md w-full' height={500} width={500} />
                                             <div className="tending-content p-3">
                                                 <div className="tending-title">
                                                     <div className="flex items-center justify-between">
-                                                        <h3 className='main-title my-3 hover:text-green-500 cursor-pointer'>{title}</h3>
+                                                        <h3 className='main-title my-3 hover:text-green-500 cursor-pointer' onClick={() => router.push(`/product/details/${_id}`)}>{title}</h3>
                                                         <FaCheckCircle className='text-green-500' />
                                                     </div>
                                                 </div>

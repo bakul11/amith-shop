@@ -1,19 +1,25 @@
 "use client"
-import React from 'react';
+import useActiveUser from '@/hooks/useActiveUser';
+import { redirect } from 'next/navigation';
+import React, { useEffect } from 'react';
+
 
 const page = () => {
+    const [user] = useActiveUser();
 
-    const handleSubmit = () => {
+    
 
-    }
 
     return (
-        <div className='p-12 my-24'>
-            <h2 className='mb-5'>upload zip file</h2>
-            <input type="file" className='ring-1' />
-            <button onClick={handleSubmit}>Upload submit</button>
+        <div className="line">
+            {
+                user?.email ?
+                    <h2>welcome</h2>
+                    : redirect('/login')
+            }
         </div>
-    );
+    )
+
 };
 
-export default page;
+export default page; 

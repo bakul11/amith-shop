@@ -7,7 +7,8 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FaArrowRightLong, FaRegTrashCan } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
-import EmptyCart from './(site)/Emptycart';
+import EmptyCart from './(site)/EmptyCart';
+
 
 const page = () => {
     const { cart } = useSelector(state => state.cart);
@@ -28,7 +29,7 @@ const page = () => {
     }
 
     return (
-        <div className='cart-section my-12'>
+        <div className='cart-section my-24'>
             {
                 cart?.length === 0 ?
                     <div className="empty">
@@ -52,7 +53,9 @@ const page = () => {
                                                         <div className="cart-title">
                                                             <h3 className='main-title'>{title}</h3>
                                                             <h3 className='my-3'>Price : ${newPrice}.00 <span className='text-red-500 pl-5'><del>${oldPrice}</del></span></h3>
-                                                            <div className="flex items-center gap-2">
+                                                        </div>
+                                                        <div className="quantity">
+                                                            <div className="flex items-center gap-3">
                                                                 <button className='bg-blue-300 text-white px-2 rounded-md' onClick={() => dispatch(incrementQty(_id))}>+</button>
                                                                 <p>{quantity}</p>
                                                                 <button className='bg-blue-300 text-white px-2 rounded-md' onClick={() => dispatch(decrementQty(_id))}>-</button>

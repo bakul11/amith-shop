@@ -22,7 +22,7 @@ const page = ({ params }) => {
                 .then(data => {
                     setPd(data)
                     setLoadding(false)
-                    console.log(data);
+                  
                 })
                 .catch(err => {
                     toast.error(err)

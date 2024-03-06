@@ -1,9 +1,10 @@
 "use client"
+import LoaddingAnimation from '@/components/Animation/LoaddingAnimation';
 import ProductCart from '@/components/RecentProduct/ProductCart';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { FaPlus, FaSearch } from 'react-icons/fa';
-import { PropagateLoader } from 'react-spinners';
+
 
 
 
@@ -18,7 +19,6 @@ const page = () => {
     const [product, setProduct] = useState([]);
     useEffect(() => {
         const fetchingProductData = async () => {
-
             await fetch('/api/product/get-allproducts')
                 .then(res => res.json())
                 .then(data => {
@@ -26,7 +26,6 @@ const page = () => {
                     setLoadding(false)
                 })
                 .catch(err => {
-                    toast.error(err)
                     setLoadding(false)
                 })
         }
@@ -42,13 +41,7 @@ const page = () => {
         <div className="product my-12">
             {
                 loadding ?
-                    <div className="loadding grid place-items-center">
-                        <h2 className='text-slate-600 mb-2 text-[19px] font-medium'>Loading please wait...</h2>
-                        <PropagateLoader
-                            color="#f1c40f"
-                            size={25}
-                        />
-                    </div>
+                    <LoaddingAnimation />
                     :
                     <div className="product">
                         {

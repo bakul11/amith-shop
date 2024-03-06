@@ -39,7 +39,7 @@ const page = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log("remove", data);
+                 
                     if (data?.success) {
                         toast.success(data?.message);
                     }

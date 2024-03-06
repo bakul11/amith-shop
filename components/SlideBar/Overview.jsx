@@ -3,9 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { LuUsers2 } from "react-icons/lu";
 import { RiWechatPayFill } from "react-icons/ri";
 import { TbZoomReset } from "react-icons/tb";
-import useActiveUser from '@/hooks/useActiveUser';
 import { FaEnvelopeCircleCheck } from "react-icons/fa6";
-import RecentProduct from '../RecentProduct/RecentProduct';
+// import RecentProduct from '../RecentProduct/RecentProduct';
 import TendingLoadding from '../Animation/TendingLoadding';
 import toast from 'react-hot-toast';
 
@@ -18,98 +17,59 @@ import toast from 'react-hot-toast';
 
 
 const Overview = () => {
-    const [user] = useActiveUser();
-    const [loadding, setLoadding] = useState(false);
 
+    const [loadding, setLoadding] = useState(true);
     // load all product api
     const [product, setProduct] = useState([]);
     useEffect(() => {
-        const fetchingProductData = async () => {
-            setLoadding(true)
-            await fetch('/api/product/get-allproducts')
-                .then(res => res.json())
-                .then(data => {
-                    setProduct(data)
-                    setLoadding(false)
-                })
-                .catch(err => {
-                    toast.error(err)
-                    setLoadding(false)
-                })
-        }
+        fetch('/api/product/get-allproducts')
+            .then(res => res.json())
+            .then(data => {
+                setProduct(data)
+                setLoadding(false)
+            })
 
-        //call function
-        fetchingProductData()
-
-    }, []);
+    }, [product]);
 
 
     // load all newsletter api
     const [newsletter, setNewsletter] = useState([]);
     useEffect(() => {
-        const fetchingNewsletterData = async () => {
-            setLoadding(true)
-            await fetch('/api/newsletter/getall-newsletter')
-                .then(res => res.json())
-                .then(data => {
-                    setNewsletter(data)
-                    setLoadding(false)
-                })
-                .catch(err => {
-                    toast.error(err)
-                    setLoadding(false)
-                })
-        }
+        fetch('/api/newsletter/getall-newsletter')
+            .then(res => res.json())
+            .then(data => {
+                setNewsletter(data)
+                setLoadding(false)
+            })
 
-        //call function
-        fetchingNewsletterData()
 
-    }, []);
+    }, [newsletter]);
 
     // load all users api
     const [users, setUsers] = useState([]);
     useEffect(() => {
-        const fetchingUsersData = async () => {
-            setLoadding(true)
-            await fetch('/api/auth/totalUsers')
-                .then(res => res.json())
-                .then(data => {
-                    setUsers(data)
-                    setLoadding(false)
-                })
-                .catch(err => {
-                    toast.error(err)
-                    setLoadding(false)
-                })
-        }
+        fetch('/api/auth/totalUsers')
+            .then(res => res.json())
+            .then(data => {
+                setUsers(data)
+                setLoadding(false)
+            })
 
-        //call function
-        fetchingUsersData()
 
-    }, []);
+    }, [users]);
 
 
     // load all orders api
     const [orders, setOrders] = useState([]);
     useEffect(() => {
-        const fetchingOrderData = async () => {
-            setLoadding(true)
-            await fetch('/api/order/get-allOrders')
-                .then(res => res.json())
-                .then(data => {
-                    setOrders(data)
-                    setLoadding(false)
-                })
-                .catch(err => {
-                    toast.error(err)
-                    setLoadding(false)
-                })
-        }
+        fetch('/api/order/get-allOrders')
+            .then(res => res.json())
+            .then(data => {
+                setOrders(data)
+                setLoadding(false)
+            })
 
-        //call function
-        fetchingOrderData()
-
-    }, []);
+    }, [orders]);
 
 
 
@@ -147,7 +107,9 @@ const Overview = () => {
         <section className='my-12'>
             <div className="overview">
                 {
-                    user?.email ?
+                    loadding ?
+                        <TendingLoadding />
+                        :
                         <div className='overview'>
                             <h1 className='text-slate-800 font-semibold text-xl mb-5'>Dashboard Overview</h1>
                             <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-5">
@@ -172,13 +134,11 @@ const Overview = () => {
                                 }
                             </div>
                         </div>
-                        :
-                        <TendingLoadding />
                 }
             </div>
-            <div className="recent-product">
+            {/* <div className="recent-product">
                 <RecentProduct />
-            </div>
+            </div> */}
         </section>
     );
 };

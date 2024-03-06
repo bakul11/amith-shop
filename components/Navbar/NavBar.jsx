@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
+import { FaAngleDown, FaShoppingBag } from 'react-icons/fa';
 import { LiaUserSolid } from "react-icons/lia";
 import { RxDashboard } from "react-icons/rx";
 import Cookies from 'js-cookie';
@@ -63,6 +63,7 @@ const NavBar = () => {
     const router = useRouter();
     const [user] = useActiveUser();
     const [open, setOpen] = useState(false);
+    const admin = user?.role;
 
     //handle Open
     const handleOpen = () => setOpen(!open);
@@ -110,12 +111,22 @@ const NavBar = () => {
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <Link href='/dashboard' className='text-white' onClick={handleOpen}>
-                                                        <div className="flex items-center gap-1 text-[15px] font-[100]">
-                                                            <RxDashboard />
-                                                            Dashboard
-                                                        </div>
-                                                    </Link>
+                                                    {
+                                                        admin === 'admin' ?
+                                                            <Link href='/dashboard' className='text-white' onClick={handleOpen}>
+                                                                <div className="flex items-center gap-1 text-[15px] font-[100]">
+                                                                    <RxDashboard />
+                                                                    Dashboard
+                                                                </div>
+                                                            </Link>
+                                                            :
+                                                            <Link href='/my-order' className='text-white' onClick={handleOpen}>
+                                                                <div className="flex items-center gap-1 text-[15px] font-[100]">
+                                                                    <FaShoppingBag />
+                                                                    Orders
+                                                                </div>
+                                                            </Link>
+                                                    }
                                                 </li>
                                                 <li>
                                                     <button className='text-white' onClick={() => {
