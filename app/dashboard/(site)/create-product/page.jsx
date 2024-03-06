@@ -6,8 +6,8 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import LoaddingAnimation from '@/components/animation/LoaddingAnimation';
 import useActiveUser from '@/hooks/useActiveUser';
+import LoaddingAnimation from '@/components/Animation/LoaddingAnimation';
 
 const ProductModalData = () => {
     const [title, setTitle] = useState('');
