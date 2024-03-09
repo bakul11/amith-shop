@@ -34,7 +34,7 @@ const Trending = () => {
     useEffect(() => {
         const fetchingData = async () => {
             setLoadding(true)
-            await fetch(`/api/product/get-allproducts?page=${currentPage}&limit=12`)
+            await fetch(`/api/product/get-allproducts?page=${currentPage}`)
                 .then(res => res.json())
                 .then(data => {
                     setTending(data?.product)

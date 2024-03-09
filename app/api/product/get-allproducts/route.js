@@ -8,12 +8,12 @@ export const GET = async (req, res) => {
         const url = new URL(req.url);
         const searchParams = new URLSearchParams(url.searchParams);
         const page = searchParams.get('page') || 8;
-        const pageSize = searchParams.get('limit') || 1;
+        const limit = 1;
 
 
         const totalItems = await productDB.countDocuments();
-        const totalPages = Math.ceil(totalItems / pageSize)
-        const skip = ((page - 1) * pageSize);
+        const totalPages = Math.ceil(totalItems / limit)
+        const skip = ((page - 1) * limit);
 
         const product = await productDB.find().skip(skip).limit(page).exec();
 
