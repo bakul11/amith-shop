@@ -25,8 +25,8 @@ const Trending = () => {
 
 
     // all data fetching here api 
-    const [currentPage, setCurrentPage] = useState(4);
-    const [pageSize, setPageSize] = useState([]);
+    const [currentPage, setCurrentPage] = useState(8);
+    const [totalPages, setTotalPages] = useState(1);
 
 
 
@@ -34,11 +34,11 @@ const Trending = () => {
     useEffect(() => {
         const fetchingData = async () => {
             setLoadding(true)
-            await fetch(`/api/product/get-allproducts?page=${currentPage}`)
+            await fetch(`/api/product/get-allproducts?page=${currentPage}&limit=12`)
                 .then(res => res.json())
                 .then(data => {
                     setTending(data?.product)
-                    setPageSize(data?.totalPages)
+                    setTotalPages(data?.totalPages)
                     setLoadding(false)
                 })
                 .catch(err => {
@@ -53,11 +53,18 @@ const Trending = () => {
     }, [currentPage]);
 
 
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
 
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
-
-    const pageDataNum = Array.from(pageSize);
-    console.log(pageDataNum);
 
 
     return (
@@ -110,7 +117,18 @@ const Trending = () => {
                             }
                         </div>
                 }
+
+
+                {/* pagination start here  */}
+                <div>
+                    <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                    <span>Page {currentPage} of {totalPages}</span>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                </div>
+
+
             </div>
+
         </section>
     );
 };
